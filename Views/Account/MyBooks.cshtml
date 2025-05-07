@@ -1,0 +1,95 @@
+@model IEnumerable<UserBook>
+
+@{
+    ViewData["Title"] = "Kitaplarım";
+}
+
+<h1>Kitaplarım</h1>
+
+@{
+    var favorites = Model.Where(ub => ub.IsFavorite).ToList();
+    var others = Model.Where(ub => !ub.IsFavorite).ToList();
+}
+
+@if (favorites.Any())
+{
+    <h4 class="mt-4">Favori Kitaplarım</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Kitap Adı</th>
+                <th>Yazar</th>
+                <th>Son Okuma Tarihi</th>
+                <th>Tamamlandı mı?</th>
+                <th>Detay</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in favorites)
+        {
+            <tr>
+                <td>@item.Book?.Title</td>
+                <td>@item.Book?.Author</td>
+                <td>@item.LastReadAt.ToString("dd.MM.yyyy")</td>
+                <td>
+                    @if (item.IsCompleted)
+                    {
+                        <span class="badge bg-success">Evet</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Hayır</span>
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@item.BookId" class="btn btn-sm btn-primary">Detay</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@if (others.Any())
+{
+    <h4 class="mt-4">Diğer Kitaplarım</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Kitap Adı</th>
+                <th>Yazar</th>
+                <th>Son Okuma Tarihi</th>
+                <th>Tamamlandı mı?</th>
+                <th>Detay</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in others)
+        {
+            <tr>
+                <td>@item.Book?.Title</td>
+                <td>@item.Book?.Author</td>
+                <td>@item.LastReadAt.ToString("dd.MM.yyyy")</td>
+                <td>
+                    @if (item.IsCompleted)
+                    {
+                        <span class="badge bg-success">Evet</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Hayır</span>
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@item.BookId" class="btn btn-sm btn-primary">Detay</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@if (!favorites.Any() && !others.Any())
+{
+    <div class="alert alert-info">Henüz kitap eklemediniz veya okuduğunuz kitap yok.</div>
+} 

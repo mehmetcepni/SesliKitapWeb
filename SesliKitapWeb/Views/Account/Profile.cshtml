@@ -1,0 +1,17 @@
+@model IEnumerable<SesliKitapWeb.Models.UserBook>
+
+<h2>My Profile</h2>
+
+<div>
+    <h3>Books I've Read</h3>
+    <ul>
+        @foreach (var userBook in Model)
+        {
+            <li>@userBook.Book.Title</li>
+        }
+    </ul>
+</div>
+
+<form asp-action="ToggleTheme" method="post">
+    <button type="submit" class="btn btn-primary">Toggle Theme</button>
+</form> 

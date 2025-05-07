@@ -1,0 +1,75 @@
+@model IEnumerable<SesliKitapWeb.Models.UserBook>
+@{
+    var user = ViewBag.User as SesliKitapWeb.Models.ApplicationUser;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Profil Bilgileri</h4>
+                    <p class="card-text">Ad: @user.FirstName</p>
+                    <p class="card-text">Soyad: @user.LastName</p>
+                    <p class="card-text">Email: @user.Email</p>
+                    
+                    <form asp-action="ToggleTheme" method="post" id="themeForm">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="themeSwitch" @(user.IsDarkMode ? "checked" : "")>
+                            <label class="form-check-label" for="themeSwitch">
+                                Karanlık Mod
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Okuduğum Kitaplar</h4>
+                    @if (Model.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var userBook in Model)
+                            {
+                                <div class="list-group-item">
+                                    <h5 class="mb-1">@userBook.Book.Title</h5>
+                                    <p class="mb-1">Yazar: @userBook.Book.Author</p>
+                                    <small>Kategori: @userBook.Book.Category</small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Henüz kitap okumamışsınız.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('themeSwitch').addEventListener('change', function() {
+            fetch('@Url.Action("ToggleTheme")', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.isDarkMode) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            });
+        });
+    </script>
+} 

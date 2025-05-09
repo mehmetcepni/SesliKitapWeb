@@ -1,46 +1,31 @@
-@model IEnumerable<Book>
+@model IEnumerable<SesliKitapWeb.Models.Category>
+
 @{
     ViewData["Title"] = "Kategoriler";
-    var categories = ViewBag.Categories as List<string>;
-    var selected = ViewBag.SelectedCategory as string;
 }
 
-<h1 class="mb-4">Kategoriler</h1>
-<div class="mb-4 d-flex flex-wrap gap-2">
-    @foreach (var cat in categories)
-    {
-        <a asp-action="Categories" asp-route-category="@cat"
-           class="btn btn-lg @(selected == cat ? "btn-primary" : "btn-outline-primary")">
-            @cat
-        </a>
-    }
-</div>
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
 
-@if (string.IsNullOrEmpty(selected))
-{
-    <div class="alert alert-info">Bir kategori seçin.</div>
-}
-else if (!Model.Any())
-{
-    <div class="alert alert-warning">Bu kategoride henüz kitap yok.</div>
-}
-else
-{
-    <h3 class="mb-3">@selected Kategorisindeki Kitaplar</h3>
-    <div class="row">
-        @foreach (var item in Model)
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var category in Model)
         {
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="@item.CoverImageUrl" class="card-img-top" alt="@item.Title">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">@item.Title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@item.Author</h6>
-                        <p class="card-text flex-grow-1">@(item.Description?.Length > 60 ? item.Description.Substring(0, 60) + "..." : item.Description)</p>
-                        <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-auto">Detaylar</a>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name</h5>
+                        <p class="card-text">@category.Description</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                @(category.Books?.Count ?? 0) kitap
+                            </small>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="BooksByCategory" asp-route-id="@category.Id" class="btn btn-primary">Kitapları Gör</a>
                     </div>
                 </div>
             </div>
         }
     </div>
-} 
+</div> 

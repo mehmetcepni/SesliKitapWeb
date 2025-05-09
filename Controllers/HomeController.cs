@@ -19,10 +19,18 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var books = await _context.Books
-            .Include(b => b.Reviews)
+        // Son eklenen 4 kitap
+        ViewBag.RecentBooks = await _context.Books
+            .OrderByDescending(b => b.CreatedAt)
+            .Take(4)
             .ToListAsync();
-        return View(books);
+
+        // En çok kitabı olan 4 kategori
+        ViewBag.PopularCategories = await _context.Categories
+            .Take(4)
+            .ToListAsync();
+
+        return View();
     }
 
     public IActionResult Privacy()

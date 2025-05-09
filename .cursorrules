@@ -1,0 +1,10 @@
+merhaba asp .net 9.0 kullanarak bir web projesi yapmak istiyorum
+Projemde olacak tüm adımları sırası ile sana anlatıyorum.
+1-Bu bir kitap okuma web sitesi projesidir
+2-Standart kitap okuma gibi düşünmemelisin,bu projeyi diğer projelerden farklı kılan şey 'kitapları sesli şekilde dinleyebilmektir.'
+3-Admin panel yap
+4-Yukarıya sabit bir navbar koy;Ana Sayfa,Kitaplar,Kategoriler,Kitaplarım,giriş yap- çıkış yap ve gece gündüz modunu ayarlayan bir buton ekle
+5-Admin olarak siteye giriş yaptığımda Kitalar sekmesine tıkladığımda karşımda Kitap Ekle adından bir buton oluştur.Kitap Ekle butonuna tıkladğımda 'Başlık
+,'Yazar','Açıklama,'Kapak Resmi URL,'Kategori','PDF Dosyası girme alanları ekle'
+6-Admin kitabın 'Başlık
+,'Yazar','Açıklama,'Kapak Resmi URL,'Kategori','PDF Dosyası' alanlarını doldurduktan sonra kitap siteye eklenmiş olsun

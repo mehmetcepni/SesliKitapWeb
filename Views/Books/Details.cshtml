@@ -1,133 +1,90 @@
 @using Microsoft.AspNetCore.Identity
-@model Book
+@model SesliKitapWeb.Models.Book
 @inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = Model.Title;
 }
 
-<div class="row">
-    <div class="col-md-4">
-        @if (!string.IsNullOrEmpty(Model.CoverImageUrl))
-        {
-            <img src="@Model.CoverImageUrl" class="img-fluid" alt="@Model.Title">
-        }
-        else
-        {
-            <img src="~/images/default-book-cover.jpg" class="img-fluid" alt="@Model.Title">
-        }
-    </div>
-    <div class="col-md-8">
-        <h1>@Model.Title</h1>
-        <h4 class="text-muted">@Model.Author</h4>
-        <p>@Model.Description</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.CoverImageUrl" class="img-fluid rounded" alt="@Model.Title">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div class="mt-3">
+                    <form asp-action="ToggleFavorite" method="post" class="d-inline">
+                        <input type="hidden" name="bookId" value="@Model.Id" />
+                        <button type="submit" class="btn @(Model.UserBooks.Any(ub => ub.IsFavorite) ? "btn-warning" : "btn-outline-warning")">
+                            <i class="bi bi-star-fill"></i> Favorilerime Ekle
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+        <div class="col-md-8">
+            <h1>@Model.Title</h1>
+            <h4 class="text-muted">@Model.Author</h4>
+            <dt class="col-sm-4">Kategori</dt>
+            <dd class="col-sm-8">@Model.Category</dd>
+            <p>@Model.Description</p>
+            
+            @if (!string.IsNullOrEmpty(Model.PdfFileUrl))
+            {
+                <a href="@Model.PdfFileUrl" class="btn btn-primary" target="_blank">
+                    <i class="bi bi-file-pdf"></i> PDF'i İndir
+                </a>
+            }
 
-        @if (User?.Identity?.IsAuthenticated == true)
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="mt-3">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Sil</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3>Yorumlar</h3>
+        @if (User.Identity?.IsAuthenticated == true)
         {
-            var userId = UserManager.GetUserId(User);
-            var isFavorite = Model.UserBooks?.Any(ub => ub.UserId == userId && ub.IsFavorite) ?? false;
-            <form asp-action="ToggleFavorite" method="post" class="d-inline">
+            <form asp-controller="Books" asp-action="AddReview" method="post" class="mb-4">
                 <input type="hidden" name="bookId" value="@Model.Id" />
-                <button type="submit" class="btn @(isFavorite ? "btn-danger" : "btn-outline-danger")">
-                    @(isFavorite ? "Favorilerden Çıkar" : "Favorilere Ekle")
-                </button>
+                <div class="form-group">
+                    <textarea name="content" class="form-control" rows="3" placeholder="Yorumunuzu yazın..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Yorum Yap</button>
             </form>
         }
 
-        @if (User?.Identity?.IsAuthenticated == true)
+        @if (Model.Reviews.Any())
         {
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Değerlendirme Yap</h5>
-                </div>
-                <div class="card-body">
-                    <form asp-action="AddReview" method="post">
-                        <input type="hidden" name="bookId" value="@Model.Id" />
-                        <div class="form-group mb-2">
-                            <label for="rating">Puan</label>
-                            <select name="rating" id="rating" class="form-control" required>
-                                <option value="">Seçiniz...</option>
-                                <option value="1">1 - Çok Kötü</option>
-                                <option value="2">2 - Kötü</option>
-                                <option value="3">3 - Orta</option>
-                                <option value="4">4 - İyi</option>
-                                <option value="5">5 - Çok İyi</option>
-                            </select>
+            foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-2 text-muted">@review.User?.UserName</h6>
+                            <small class="text-muted">@review.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
                         </div>
-                        <div class="form-group mb-2">
-                            <label for="comment">Yorum</label>
-                            <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Değerlendir</button>
-                    </form>
+                        <p class="card-text">@review.Content</p>
+                        @if (User.IsInRole("Admin") || review.UserId == User.Identity?.Name)
+                        {
+                            <form asp-controller="Reviews" asp-action="Delete" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@review.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                            </form>
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         }
-
-        @if (Model.Reviews != null && Model.Reviews.Any())
+        else
         {
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Değerlendirmeler</h5>
-                </div>
-                <div class="card-body">
-                    @foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
-                    {
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1 d-inline">@(review.User?.FirstName ?? "Anonim") @(review.User?.LastName ?? "")</h6>
-                                    <small class="text-muted ms-2">@review.CreatedAt.ToString("dd.MM.yyyy")</small>
-                                </div>
-                                @if ((User?.Identity?.IsAuthenticated == true) && (User.IsInRole("Admin") || review.UserId == UserManager.GetUserId(User)))
-                                {
-                                    <form asp-controller="Reviews" asp-action="Delete" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" value="@review.Id" />
-                                        <button type="submit" class="btn btn-sm btn-danger ms-2" onclick="return confirm('Yorumu silmek istediğinize emin misiniz?');">Sil</button>
-                                    </form>
-                                }
-                            </div>
-                            <div class="mb-2">
-                                @for (int i = 0; i < review.Rating; i++)
-                                {
-                                    <span class="text-warning">★</span>
-                                }
-                                @for (int i = review.Rating; i < 5; i++)
-                                {
-                                    <span class="text-muted">☆</span>
-                                }
-                            </div>
-                            <p class="mb-0">@review.Comment</p>
-                        </div>
-                    }
-                </div>
-            </div>
+            <p class="text-muted">Henüz yorum yapılmamış.</p>
         }
-
-        <div class="book-content">
-            <h1>@Model.Title</h1>
-            <h4 class="text-muted">@Model.Author</h4>
-            <p>@Model.Description</p>
-
-            <div id="bookContent" class="mt-4">
-                @Model.Content
-            </div>
-
-            <div class="audio-controls mt-4">
-                <button id="playButton" class="btn btn-primary">▶️ Sesli Dinle</button>
-                <button id="pauseButton" class="btn btn-warning" disabled>⏸️ Duraklat</button>
-                <button id="resumeButton" class="btn btn-success" disabled>▶️ Devam Et</button>
-                <label for="rateControl" class="ms-3">Hız:</label>
-                <select id="rateControl" class="form-select form-select-sm w-auto d-inline-block">
-                    <option value="0.75">0.75x</option>
-                    <option value="1" selected>1x</option>
-                    <option value="1.25">1.25x</option>
-                    <option value="1.5">1.5x</option>
-                </select>
-            </div>
-        </div>
-
-        <button onclick="fetchAndReadPdfText('@Model.PdfFilePath')">Seslendir</button>
     </div>
 </div>
 

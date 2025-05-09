@@ -8,18 +8,15 @@ namespace SesliKitapWeb.Models
         public int Id { get; set; }
 
         [Required]
+        public string Content { get; set; } = string.Empty;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Required]
         public string UserId { get; set; } = string.Empty;
 
         [Required]
         public int BookId { get; set; }
-
-        [Required]
-        [Range(1, 5)]
-        public int Rating { get; set; }
-
-        public string Comment { get; set; } = string.Empty;
-
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; } = null!;

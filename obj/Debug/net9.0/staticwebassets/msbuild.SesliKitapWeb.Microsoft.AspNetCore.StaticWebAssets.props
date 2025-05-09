@@ -12,8 +12,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>3358y51dy6</Fingerprint>
-      <Integrity>v7EkW+goxngcIFFSL+tcH0K5zquMVTJY/dLER0oPq0Q=</Integrity>
+      <Fingerprint>t5oj6253l1</Fingerprint>
+      <Integrity>ER+MoG7n0l50Dox+tmESjde9IJdlBOlr4g6GpqX7oy8=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</OriginalItemSpec>
@@ -1151,6 +1151,60 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\SesliKitapWeb.vcy4di37xx.bundle.scp.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\66b1d7f6-896d-435d-9737-16b87aa65861.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SesliKitapWeb</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SesliKitapWeb</BasePath>
+      <RelativePath>uploads/66b1d7f6-896d-435d-9737-16b87aa65861.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>d5l5kjvdui</Fingerprint>
+      <Integrity>UeqAIcyrQDU7sRL6PBVBCqKyL+r1lb8jFWW+KawrmXE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\66b1d7f6-896d-435d-9737-16b87aa65861.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7eae8558-3dc8-4010-bb1f-9ea8bdf2c89a.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SesliKitapWeb</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SesliKitapWeb</BasePath>
+      <RelativePath>uploads/7eae8558-3dc8-4010-bb1f-9ea8bdf2c89a.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>d5l5kjvdui</Fingerprint>
+      <Integrity>UeqAIcyrQDU7sRL6PBVBCqKyL+r1lb8jFWW+KawrmXE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7eae8558-3dc8-4010-bb1f-9ea8bdf2c89a.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\cfb490c0-1d98-4652-a211-0e9768cec1ce.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>SesliKitapWeb</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/SesliKitapWeb</BasePath>
+      <RelativePath>uploads/cfb490c0-1d98-4652-a211-0e9768cec1ce.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>d5l5kjvdui</Fingerprint>
+      <Integrity>UeqAIcyrQDU7sRL6PBVBCqKyL+r1lb8jFWW+KawrmXE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\cfb490c0-1d98-4652-a211-0e9768cec1ce.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

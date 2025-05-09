@@ -1,18 +1,39 @@
-@model Book
+@model SesliKitapWeb.Models.Book
 
 @{
-    ViewData["Title"] = "Kitabı Sil";
+    ViewData["Title"] = "Kitap Sil";
 }
 
-<h1>Kitabı Sil</h1>
-<h3>Bu kitabı silmek istediğinizden emin misiniz?</h3>
-<div>
-    <h4>@Model.Title</h4>
-    <p><strong>Yazar:</strong> @Model.Author</p>
-    <p><strong>Açıklama:</strong> @Model.Description</p>
-</div>
-<form asp-action="Delete">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Sil</button>
-    <a asp-action="Index" class="btn btn-secondary">İptal</a>
-</form> 
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+    <div class="alert alert-danger">
+        <h4>Bu kitabı silmek istediğinizden emin misiniz?</h4>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.CoverImageUrl" class="img-fluid rounded" alt="@Model.Title">
+        </div>
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">Başlık</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
+
+                <dt class="col-sm-3">Yazar</dt>
+                <dd class="col-sm-9">@Model.Author</dd>
+
+                <dt class="col-sm-3">Kategori</dt>
+                <dd class="col-sm-8">@Model.Category</dd>
+
+                <dt class="col-sm-3">Açıklama</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Sil</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </form>
+        </div>
+    </div>
+</div> 

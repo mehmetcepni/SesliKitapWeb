@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mehme\\Desktop\\projectss\\SesliKitapWeb - Kopya\\SesliKitapWeb.csproj": {}
+    "C:\\Users\\mehme\\OneDrive\\Desktop\\SesliKitapWeb\\SesliKitapWeb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mehme\\Desktop\\projectss\\SesliKitapWeb - Kopya\\SesliKitapWeb.csproj": {
+    "C:\\Users\\mehme\\OneDrive\\Desktop\\SesliKitapWeb\\SesliKitapWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mehme\\Desktop\\projectss\\SesliKitapWeb - Kopya\\SesliKitapWeb.csproj",
+        "projectUniqueName": "C:\\Users\\mehme\\OneDrive\\Desktop\\SesliKitapWeb\\SesliKitapWeb.csproj",
         "projectName": "SesliKitapWeb",
-        "projectPath": "C:\\Users\\mehme\\Desktop\\projectss\\SesliKitapWeb - Kopya\\SesliKitapWeb.csproj",
+        "projectPath": "C:\\Users\\mehme\\OneDrive\\Desktop\\SesliKitapWeb\\SesliKitapWeb.csproj",
         "packagesPath": "C:\\Users\\mehme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mehme\\Desktop\\projectss\\SesliKitapWeb - Kopya\\obj\\",
+        "outputPath": "C:\\Users\\mehme\\OneDrive\\Desktop\\SesliKitapWeb\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -65,7 +65,7 @@
               "target": "Package",
               "version": "[9.0.4, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[9.0.4, )"
             },

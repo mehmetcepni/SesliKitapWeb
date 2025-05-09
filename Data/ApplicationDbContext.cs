@@ -43,6 +43,14 @@ namespace SesliKitapWeb.Data
                 .WithMany(b => b.UserBooks)
                 .HasForeignKey(ub => ub.BookId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Fıkra", Description = "Fıkra kitapları" },
+                new Category { Id = 2, Name = "Çocuk Hikayeleri", Description = "Çocuk hikayeleri kitapları" },
+                new Category { Id = 3, Name = "Roman", Description = "Roman türü kitaplar" },
+                new Category { Id = 4, Name = "Tarih", Description = "Tarih kitapları" },
+                new Category { Id = 5, Name = "Biyografi", Description = "Biyografi kitapları" }
+            );
         }
     }
 } 

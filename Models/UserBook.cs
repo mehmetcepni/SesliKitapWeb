@@ -19,6 +19,8 @@ namespace SesliKitapWeb.Models
 
         public bool IsFavorite { get; set; } = false;
 
+        public DateTime AddedAt { get; set; } = DateTime.Now;
+
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; } = null!;
 

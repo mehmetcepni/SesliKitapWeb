@@ -18,26 +18,30 @@ namespace SesliKitapWeb.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
+        // POST: Reviews/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            var review = await _context.Reviews.Include(r => r.User).FirstOrDefaultAsync(r => r.Id == id);
+            var review = await _context.Reviews
+                .Include(r => r.Book)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
             if (review == null)
+            {
                 return NotFound();
+            }
 
             var user = await _userManager.GetUserAsync(User);
-            var isAdmin = User.IsInRole("Admin");
-            var isOwner = review.UserId == user.Id;
+            // Sadece admin veya yorumun sahibi silebilir
+            if (User.IsInRole("Admin") || review.UserId == user?.Id)
+            {
+                _context.Reviews.Remove(review);
+                await _context.SaveChangesAsync();
+            }
 
-            if (!isAdmin && !isOwner)
-                return Forbid();
-
-            int bookId = review.BookId;
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Details", "Books", new { id = bookId });
+            return RedirectToAction("Details", "Books", new { id = review.BookId });
         }
     }
 } 

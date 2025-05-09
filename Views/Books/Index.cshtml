@@ -1,56 +1,41 @@
-@model IEnumerable<Book>
+@model IEnumerable<SesliKitapWeb.Models.Book>
 
 @{
     ViewData["Title"] = "Kitaplar";
 }
 
-<h1>Kitaplar</h1>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@ViewData["Title"]</h1>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary">Yeni Kitap Ekle</a>
+        }
+    </div>
+    
 
-@if (User?.IsInRole("Admin") == true)
-{
-    <p>
-        <a asp-action="Create" class="btn btn-primary">Yeni Kitap Ekle</a>
-    </p>
-}
-
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                @if (!string.IsNullOrEmpty(item.CoverImageUrl))
-                {
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
                     <img src="@item.CoverImageUrl" class="card-img-top" alt="@item.Title">
-                }
-                else
-                {
-                    <img src="~/images/default-book-cover.jpg" class="card-img-top" alt="@item.Title">
-                }
-                <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@item.Author</h6>
-                    <p class="card-text">@(item.Description?.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="text-muted">
-                                @if (item.Reviews != null && item.Reviews.Any())
-                                {
-                                    <text>@item.Reviews.Average(r => r.Rating).ToString("F1") / 5</text>
-                                }
-                                else
-                                {
-                                    <text>Henüz değerlendirilmedi</text>
-                                }
-                            </span>
-                        </div>
-                        <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-auto">Detaylar</a>
-                        @if (User?.IsInRole("Admin") == true)
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Author</h6>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><small class="text-muted">Kategori: @item.Category</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detaylar</a>
+                        @if (User.IsInRole("Admin"))
                         {
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger mt-2">Sil</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Düzenle</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
                         }
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div> 

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SesliKitapWeb.Data;
 using SesliKitapWeb.Models;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,7 +12,7 @@ builder.Services.AddControllersWithViews();
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -51,10 +53,27 @@ using (var scope = app.Services.CreateScope())
     if (!await roleManager.RoleExistsAsync("Admin"))
         await roleManager.CreateAsync(new IdentityRole("Admin"));
 
-    // Buraya kendi kayıt olduğun e-posta adresini yaz!
-    var adminUser = await userManager.FindByEmailAsync("admin@gmail.com");
-    if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
-        await userManager.AddToRoleAsync(adminUser, "Admin");
+    // Admin kullanıcısı yoksa oluştur
+    var adminEmail = "admin@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+            FirstName = "Admin",
+            LastName = "User"
+        };
+        
+        var result = await userManager.CreateAsync(adminUser, "Admin123!");
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+    }
 }
 
 app.UseHttpsRedirection();

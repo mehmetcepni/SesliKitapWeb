@@ -27,6 +27,7 @@ public class HomeController : Controller
 
         // En çok kitabı olan 4 kategori
         ViewBag.PopularCategories = await _context.Categories
+            .Include(c => c.Books)
             .Take(4)
             .ToListAsync();
 

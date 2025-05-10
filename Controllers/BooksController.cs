@@ -63,7 +63,7 @@ namespace SesliKitapWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Title,Author,Description,CoverImageUrl,PdfFileUrl,Category,BookContent")] Book book, IFormFile? CoverImage)
+        public async Task<IActionResult> Create([Bind("Title,Author,Description,CoverImageUrl,PdfFileUrl,CategoryId,BookContent")] Book book, IFormFile? CoverImage)
         {
             if (CoverImage != null && CoverImage.Length > 0)
             {
@@ -245,7 +245,7 @@ namespace SesliKitapWeb.Controllers
         // Kategoriler sekmesi
         public async Task<IActionResult> Categories()
         {
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await _context.Categories.Include(c => c.Books).ToListAsync();
             return View(categories);
         }
 

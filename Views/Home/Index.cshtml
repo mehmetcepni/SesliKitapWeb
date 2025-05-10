@@ -16,6 +16,11 @@
         }
     </div>
 
+    @foreach (var cat in ViewBag.PopularCategories)
+{
+    Console.WriteLine($"sdadsadsadasdsad","{cat.Name}: {cat.Books?.Count ?? 0}");
+}
+
     <div class="row mt-5">
         <div class="col-md-6">
             <h2>Son Eklenen Kitaplar</h2>
@@ -28,7 +33,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">@book.Title</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">@book.Author</h6>
-                                <p class="card-text">@(book.Description?.Length > 100 ? book.Description[..100] + "..." : book.Description)</p>
+                                <p class="card-text">@(book.Description?.Length > 100 ? book.Description.Substring(0, 100) + "..." : book.Description)</p>
                             </div>
                             <div class="card-footer">
                                 <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary">Detaylar</a>

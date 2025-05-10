@@ -14,7 +14,7 @@ namespace SesliKitapWeb.Models
 
         public string Description { get; set; } = string.Empty;
 
-        public ICollection<Book> Books { get; set; } = new List<Book>();
+        public virtual ICollection<Book> Books { get; set; } = new List<Book>();
 
         
     }

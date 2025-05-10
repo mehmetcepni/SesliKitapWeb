@@ -26,6 +26,7 @@ namespace SesliKitapWeb.Models
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
 
-        public string Category { get; set; } = string.Empty;
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
